@@ -49,7 +49,7 @@ SnackMenuKey         := "+F13" ; Open Snack menu (+ = shift, rtfm).
 AutoHealthKey        := "^+F13" ; Automatic snacking. Eats 2 snacks from second snack slot.
 ArmorMenuKey         := "+F1" ; Open Armor menu.
 AutoArmorKey         := "F13" ; Automatic armor equip (uses super heavy armor only).
-RetrieveCarKey       := "F14" ; Request Personal Vehicle.
+RetrieveCarKey       := "F24" ; Request Personal Vehicle.
 TogglePassiveKey     := "F3" ; Toggle passive mode.
 EquipScarfKey        := "NumpadDot" ; Equip first scarf (heist outfit glitch, see readme/misc).
 ToggleRadarKey       := "+F2" ; Toggle between extended and standar radar.
@@ -65,6 +65,7 @@ RandomHeistKey       := "F7" ; Chooses on-call random heist from phone options
 CEOBuzzardKey        := "F24" ; Spawn free CEO buzzard
 RequestKosatkaKey    := "F15" ; Requests Kosatka
 ReturnKosatkaKey     := "+F15" ; Returns Kosatks
+CutDrainageTunnelKey := "F14" ; Cuts drainage tunnel grate for Cayo Perico Heist Final
 
 DialDialogKey        := "+F5" ; Call GUI with a list of almost all numbers
 CallMechanicKey      := "F5" ; Call Mechanic
@@ -218,6 +219,7 @@ Hotkey, %CallLesterKey%, CallLester
 Hotkey, %CallAssistantKey%, CallAssistant
 Hotkey, %RequestKosatkaKey%, RequestKosatka
 Hotkey, %ReturnKosatkaKey%, ReturnKosatka
+Hotkey, %CutDrainageTunnelKey%, CutDrainageTunnel
 
 ; Sets delay(ms) between keystrokes issued. Arguments are delay between keystrokes and press duration, respectively.
 ; They might be able to go lower but these values are pretty fast and work reliably.
@@ -699,6 +701,77 @@ ReturnKosatka:
   openInteractionMenu(IsVIPActivated, IsCPHActivated)
   Send {Down 5}{Enter}{Up}{Enter}{Down 3}{Enter 2}
   return
+
+; Cuts drainage tunnel grate for Cayo Perico Heist Final
+CutDrainageTunnel:
+  IntHorizontalDelay := 171 ; Delay for precise right movement
+  IntVerticallDelay := 190 ; Delay for precise right movement
+  IntDiagonalDelay := 50
+  IntBarCutDelay := 300 ; Delay  for time it takes for cutting torch to cut through bar
+  
+  Send {d Down}
+  sleep, IntHorizontalDelay/2
+  Send {d Up}
+  sleep, IntBarCutDelay
+  Loop, 5 {
+    Send {d Down}
+    sleep, IntHorizontalDelay
+    Send {d Up}
+    sleep, IntBarCutDelay
+  }
+  Send {d Down}
+  Send {s Down}
+  sleep, IntDiagonalDelay
+  Send {d Up}
+  Send {s Up}
+  sleep, IntBarCutDelay
+  Loop, 6 {
+    Send {s Down}
+    sleep, IntVerticallDelay
+    Send {s Up}
+    sleep, IntBarCutDelay
+  }
+  Send {s Down}
+  Send {a Down}
+  sleep, IntDiagonalDelay
+  Send {s Up}
+  Send {a Up}
+  sleep, IntBarCutDelay
+  Loop, 5 {
+    Send {a Down}
+    sleep, IntHorizontalDelay
+    Send {a Up}
+    sleep, IntBarCutDelay
+  }
+  Send {a Down}
+  Send {w Down}
+  sleep, IntDiagonalDelay
+  Send {a Up}
+  Send {w Up}
+  sleep, IntBarCutDelay
+  Loop, 6 {
+    Send {w Down}
+    sleep, IntVerticallDelay
+    Send {w Up}
+    sleep, IntBarCutDelay
+  }
+  Return
+    
+  ; i := 0
+  ; while (i<2) {
+  ;   i++
+  ;   direction = directions[%i%]
+  ;   j := 0
+  ;   while (j<5) {
+  ;     j++
+  ;     Send {%direction% Down}
+  ;     sleep, IntHoriVertiDelay
+  ;     Send {%direction% Up}
+  ;     sleep, IntBarCutDelay
+  ;   }    
+  ; }
+  ; Return
+  
 
 ; Show a list of chat snippets to type out (chat must be opened)
 ChatSnippets:
