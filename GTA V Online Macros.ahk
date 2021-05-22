@@ -1,4 +1,4 @@
-; v1.2.1
+﻿; v1.2.1
 ; ^ don't remove or alter this line (autoupdate)
 #MaxThreadsPerHotkey 2
 
@@ -45,17 +45,17 @@
 ;   https://www.autohotkey.com/docs/KeyList.htm
 ; WARNING: If you don't want to use a certain binding use "F24"
 ;          or any other valid key or it will break!
-SnackMenuKey         := "+#" ; Open Snack menu (+ = shift, rtfm).
-AutoHealthKey        := "#" ; Automatic snacking. Eats 2 snacks from second snack slot.
+SnackMenuKey         := "+F13" ; Open Snack menu (+ = shift, rtfm).
+AutoHealthKey        := "^+F13" ; Automatic snacking. Eats 2 snacks from second snack slot.
 ArmorMenuKey         := "+F1" ; Open Armor menu.
-AutoArmorKey         := "F1" ; Automatic armor equip (uses super heavy armor only).
-RetrieveCarKey       := "F2" ; Request Personal Vehicle.
+AutoArmorKey         := "F13" ; Automatic armor equip (uses super heavy armor only).
+RetrieveCarKey       := "F14" ; Request Personal Vehicle.
 TogglePassiveKey     := "F3" ; Toggle passive mode.
 EquipScarfKey        := "NumpadDot" ; Equip first scarf (heist outfit glitch, see readme/misc).
 ToggleRadarKey       := "+F2" ; Toggle between extended and standar radar.
 CycleOutfitKey       := "NumpadAdd" ; Equip next/cycle through saved outfits.
-ToggleVIPKey         := "NumpadSub" ; Toggle VIP mode (required when VIP/CEO/MC).
-ToggleCPHKey         := "^NumpadSub" ; Toggle Cayo Perico Heist Final mode (extra menu entry), also see DoToggleCPHWithVIP
+ToggleVIPKey         := "F16" ; Toggle VIP mode (required when VIP/CEO/MC).
+ToggleCPHKey         := "+F16" ; Toggle Cayo Perico Heist Final mode (extra menu entry), also see DoToggleCPHWithVIP
 ToggleAFKKey         := "+NumpadSub" ; Toggle AFK mode
 ToggleClickerKey     := "+XButton2" ; Toggle Clicker (XButton2 = Mouse5)
 KillGameKey          := "+F12" ; Kill game process, requires pskill.exe
@@ -63,6 +63,8 @@ ForceDisconnectKey   := "F12" ; Force disconnect by suspending process for 10s, 
 ChatSnippetsKey      := "F11" ; Gives you a few text snippets to put in chat (chat must be already open)
 RandomHeistKey       := "F7" ; Chooses on-call random heist from phone options
 CEOBuzzardKey        := "F24" ; Spawn free CEO buzzard
+RequestKosatkaKey    := "F15" ; Requests Kosatka
+ReturnKosatkaKey     := "+F15" ; Returns Kosatks
 
 DialDialogKey        := "+F5" ; Call GUI with a list of almost all numbers
 CallMechanicKey      := "F5" ; Call Mechanic
@@ -214,6 +216,8 @@ Hotkey, %CallMerryweatherKey%, CallMerryweather
 Hotkey, %CallInsuranceKey%, CallInsurance
 Hotkey, %CallLesterKey%, CallLester
 Hotkey, %CallAssistantKey%, CallAssistant
+Hotkey, %RequestKosatkaKey%, RequestKosatka
+Hotkey, %ReturnKosatkaKey%, ReturnKosatka
 
 ; Sets delay(ms) between keystrokes issued. Arguments are delay between keystrokes and press duration, respectively.
 ; They might be able to go lower but these values are pretty fast and work reliably.
@@ -682,6 +686,18 @@ RandomHeist:
 CEOBuzzard:
   openInteractionMenu(false, false)
   Send {Enter}{Up 2}{Enter}{Down 4}{Enter}
+  return
+
+; Requests Kosatka
+RequestKosatka:
+  openInteractionMenu(IsVIPActivated, IsCPHActivated)
+  Send {Down 5}{Enter}{Up}{Enter 2}
+  return
+
+; Returns Kosatka
+ReturnKosatka:
+  openInteractionMenu(IsVIPActivated, IsCPHActivated)
+  Send {Down 5}{Enter}{Up}{Enter}{Down 3}{Enter 2}
   return
 
 ; Show a list of chat snippets to type out (chat must be opened)
